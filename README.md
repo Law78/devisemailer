@@ -6,19 +6,16 @@
      `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
     ----------------------------------------------------------------- 
 
+Avvio il server con:
+rails s -b $IP -p $PORT
 
-Welcome to your Rails project on Cloud9 IDE!
+e lo fermo con CTRL-C
 
-To get started, just do the following:
+#Lezione 31
 
-1. Run the project with the "Run Project" button in the menu bar on top of the IDE.
-2. Preview your new app by clicking on the URL that appears in the Run panel below (https://devisemailer-lordkenzo.c9users.io/).
-
-Happy coding!
-The Cloud9 IDE team
-
-
-## Support & Documentation
-
-Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
-To watch some training videos, visit http://www.youtube.com/user/c9ide
+Ho cambiato il GEMFILE spostando la gemma sqlite3 nel gruppo dev in quanto crea
+conflitto con Heroku.
+Quindi ho rifatto il bundle, con il comando bundle. Dopodichè creato il DB
+lanciando 'heroku run rake db:migrate'.
+Posso avviare la Console Rails su Heroku con il comando: 'heroku run rails console'
+e uscire con 'quit'.
