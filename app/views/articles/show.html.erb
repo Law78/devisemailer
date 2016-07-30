@@ -1,6 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Creato da:</strong>
+  <%= @article.user.username %>
+  <strong>In Data:</strong>
+  <%= @article.created_at.strftime("%d-%m-%Y %H:%M") %>
+</p>
+
+<p>
   <strong>Titolo:</strong>
   <%= @article.title %>
 </p>
