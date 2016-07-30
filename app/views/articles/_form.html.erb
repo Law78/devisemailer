@@ -1,0 +1,12 @@
+<%= simple_form_for(@article) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title, :label => 'Titolo' %>
+    <%= f.input :body, :label => 'Testo' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Inserisci Articolo' %>
+  </div>
+<% end %>

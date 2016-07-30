@@ -120,8 +120,11 @@
       <!-- /.row -->
     </div>
     <div class="well">
-      <h4>Side Widget Well</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+      <h4>Articoli Recenti</h4>
+      <% @articles.each do |a|  %>
+      <strong><%= link_to a.title, a %></strong>
+      <p><%= truncate(a.body) %></p>
+      <% end %>
     </div>
   </div>
 </div>
