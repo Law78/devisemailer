@@ -23,7 +23,8 @@ e uscire con 'quit'.
 #Lezione 53
 Dopo aver fatto il commit su github, ho fatto il commit anche su heroku ma 
 ho avuto problemi con un messaggio abbastanza generico. Dovevo semplicemente
-lanciare da riga di comando (ad es. da cloud9): heroku run rake db:migrate
+lanciare da riga di comando (ad es. da cloud9): heroku run rake db:migrate.
+Credo che potevo fare prima anche heroku run rake db:reset (resetta il db)
 
 #Lezione 56
 Prima di aggiornare il controller degli Articoli, assicurati di fare il login
