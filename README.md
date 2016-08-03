@@ -70,3 +70,20 @@ Ho fatto il push e heroku run rake db:migrate
 
 #Lezione 70
 Andiamo a ritoccare il footer
+
+Ricorda:
+I controller e gli Helper li scrivi al plurale:
+
+rails g controller Users index show
+rails g herlpers Users
+
+Ma a plurale anche le Migration e le Resource e le Table:
+rails g mirgation AddEmailToUsers email:string
+resources :users, :only => [:index, :show]
+SELECT * FROM users;
+
+Al singolare abbiamo il Mailer, Model, Observer e lo SCAFFOLD:
+rails g mailer UserMailer
+rails g model User name:string
+rails g observer User
+rails g scaffold User name:string
