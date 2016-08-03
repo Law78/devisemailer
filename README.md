@@ -65,3 +65,8 @@ ContactMailer.contact_email(name, email, message).deliver
 
 L'altro errore è quel del nome file di contact_mail.html.erb in views che si
 deve chiamare contact_email.html.erb
+
+Ho fatto il push e heroku run rake db:migrate
+
+#Lezione 70
+Andiamo a ritoccare il footer
