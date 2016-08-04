@@ -83,7 +83,43 @@ resources :users, :only => [:index, :show]
 SELECT * FROM users;
 
 Al singolare abbiamo il Mailer, Model, Observer e lo SCAFFOLD:
+```
 rails g mailer UserMailer
 rails g model User name:string
 rails g observer User
 rails g scaffold User name:string
+```
+
+# Lezione 72
+
+Andiamo a creare un branch per l'aggiunta dei commenti con:
+
+```
+git checkout -b comments
+```
+
+Creo il file di migrazione, il modello Comment e il test unit con il comando:
+
+```
+rails generate model Comment body:text user:references article:references
+```
+
+e successivamente il comando:
+
+```
+rake db:migrate
+```
+
+Ora vado ad aggiungere la relazione sia nel modello User che nel modello Article:
+
+```
+has_many :comments
+```
+
+e verifico che Comments ha le seguenti relazioni:
+
+```
+belongs_to :user
+belongs_to :article
+```
+

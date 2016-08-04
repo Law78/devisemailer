@@ -17,4 +17,3 @@ if [ -z "$1" ]
         git push heroku master
     fi
 fi
-
