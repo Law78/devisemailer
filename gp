@@ -2,18 +2,20 @@ if [ -z "$1" ]
   then
     echo "No comment supplied"
   else
-    echo "commento $1"
+    echo "Aggiungo commento $1"
     if [ -z "$2" ]
     then
-      bash="master"
+      branch="master"
     else
-      bash=$2
+      branch=$2
     fi
+    echo "Commit su branch $branch"
     git add -A
     git commit -m "$1"
-    git push origin "$bash"
+    git push origin "$branch"
     if [ "$3" == 'heroku' ]
       then
+      echo "Commit su Heroku"
         git push heroku master
     fi
 fi

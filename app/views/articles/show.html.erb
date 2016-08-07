@@ -17,5 +17,7 @@
   <%= @article.body %>
 </p>
 
+<%= render 'comments/form' %>
+
 <%= link_to 'Modifica', edit_article_path(@article) %> |
 <%= link_to 'Torna indietro', articles_path %>
