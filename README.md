@@ -293,3 +293,123 @@ nello show.html.erb dell'article.
 E proviamo ad inserire un commento e successivamente fare la verifica dalla console
 di rails con il comando 'rails c' da terminale. Ora scrivo 'Comment.last' e dovrei
 avere il commento appena creato.
+La lezione finisce col push su git.
+
+# Lezione 82
+
+In show di article vado ad inserire, sotto la render dei commenti:
+
+```html
+<div class="row">
+  <!-- Blog Post Content Column -->
+   <div class="col-lg-8">
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1 style="font-size: 62.5px;">
+<%= @article.title %>
+</h1>
+    <!-- Author -->
+    <p class="lead">
+      <%= @article.user.username %>
+    </p>
+    <hr>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span> Was Posted:
+
+      <hr>
+      <!-- Preview Image -->
+
+      <hr>
+      <!-- Post Content -->
+
+      <hr>
+      <!-- Blog Comments -->
+      <%= @article.body %>
+        <!-- Comments Form -->
+
+        <%= render 'comments/form' %>
+          <div class="well">
+
+            <h4>blah blah</h4>
+          </div>
+          <hr>
+          <!-- Posted Comments -->
+          <!-- Comment -->
+  </div>
+  <!-- Blog Sidebar Widgets Column -->
+  <div class="col-md-4">
+    <!-- Blog Search Well -->
+
+    <!-- Blog Categories Well -->
+
+    <!-- Side Widget Well -->
+    <div class="well">
+      <h4>Recent Posts</h4>
+
+    </div>
+  </div>
+</div>
+```
+
+Ora devo fare alcune modifiche in modo da poter utilizzare questo template ed 
+usare i campi giusti.
+
+Alla fine ho qualcosa di così fatto:
+
+```
+<div class="row">
+
+  <!-- Blog Post Content Column -->
+   <div class="col-lg-8">
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1 style="font-size: 62.5px;">
+      <%= @article.title %>
+    </h1>
+    <!-- Author -->
+    <p class="lead">
+      Autore: <%= @article.user.username %>
+    </p>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span> Creato:
+      <%= @article.created_at.strftime("%d-%m-%Y %H:%M") %>
+    </p>
+    <!-- Preview Image -->
+
+
+    <!-- Post Content -->
+    <%= @article.body %>
+    <hr>
+    <!-- Blog Comments -->
+
+    <!-- Comments Form -->
+
+    <%= render 'comments/form' %>
+    <div class="well">
+
+      <h4>blah blah</h4>
+    </div>
+    <hr>
+    <!-- Posted Comments -->
+    <!-- Comment -->
+  </div>
+  <!-- Blog Sidebar Widgets Column -->
+  <div class="col-md-4">
+    <!-- Blog Search Well -->
+
+    <!-- Blog Categories Well -->
+
+    <!-- Side Widget Well -->
+    <div class="well">
+      <h4>Recent Posts</h4>
+    </div>
+  </div>
+  
+  
+</div>
+
+<%= link_to 'Modifica', edit_article_path(@article) %> |
+<%= link_to 'Torna indietro', articles_path %>
+```
+
+Ho un problema col resize, in cui il footer mi copre parte della parte finale!.
