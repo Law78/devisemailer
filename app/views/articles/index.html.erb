@@ -1,31 +1,30 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Lista Articoli</h1>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Autore</th>
-      <th>Titolo</th>
-      <th>Testo</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="row">
+  <div class="col-lg-8">
     <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.user.username %></td>
-        <td><%= article.title %></td>
-        <td><%= article.body %></td>
-        <td><%= link_to 'Visualizza', article %></td>
-        <td><%= link_to 'Modifica', edit_article_path(article) %></td>
-        <td><%= link_to 'Elimina', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <h4 style="font-size: 45.5px;"><%= link_to article.title, article %></h4>
+      <p><span class="glyphicon glyphicon-time"></span></p>
+      <p>Articolo di:<strong><%= article.user.username %></strong></p>
+      <hr>
     <% end %>
-  </tbody>
-</table>
+  
+    <%= link_to 'Nuovo Articolo', new_article_path, class: "btn btn-default btn-xs" %>
+  </div>
+  <div class="col-md-4">
+    <div class="well">
+      <h4>Articoli Recenti</h4>
+      <% @lastArticles.each do |p| %>
+        Creato da: <% p.user.username %><br />
+        <strong><%= link_to p.title, p%></strong>
+        <p><%= truncate(p.body) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
 
+<%= will_paginate @articles %>
 <br>
 
-<%= link_to 'Nuovo Articolo', new_article_path %>
+
+

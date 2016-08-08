@@ -356,7 +356,7 @@ usare i campi giusti.
 
 Alla fine ho qualcosa di così fatto:
 
-```
+```html
 <div class="row">
 
   <!-- Blog Post Content Column -->
@@ -413,3 +413,323 @@ Alla fine ho qualcosa di così fatto:
 ```
 
 Ho un problema col resize, in cui il footer mi copre parte della parte finale!.
+
+# Lezione 83
+
+In questa lezione sono andato ad inserire la seguente riga di codice dopo il
+commento riportato:
+
+```ruby
+  <!-- Blog Comments -->
+  <%= render @article.comments %>
+```
+
+che mi permette di visualizzare i commenti.
+Poi sono andato ad ultimare il file parziale di visualizzazione dei commenti:
+
+```html
+<div class="media">
+  <div class="pull-left">
+    
+    <%= comment.user.username %>
+    
+  </div>
+  <div class="media-body">
+    <p class="media-heading pull-right">
+      
+      <%= time_ago_in_words(comment.created_at) %>
+      
+    </p><br />
+    
+    <%= comment.body %>
+  </div>
+</div>
+
+<%= link_to 'Modifica', edit_article_comment_path(comment.article,comment) %> |
+<%= link_to 'Cancella', [comment.article, comment], method: :delete,
+  data: {confirm: "Sei sicuro?" } %>
+```
+
+# Lezione 84
+
+Andiamo a lavorare sulla edit page del comment:
+
+```ruby
+<h1>Modifica commento</h1>
+
+<%= simple_form_for([@article, @comment]) do |f| %>
+  <%= f.input :body, :label => "Commento" %>
+  <%= f.submit "Modifica" %>
+<% end %>
+
+<%= link_to 'Torna Articolo', @article %> |
+<%= link_to 'Lista Articoli', articles_path %>
+```
+
+# Lezione 85
+
+Cambiamo l'index degli articoli. Avevo:
+
+```html
+<p id="notice"><%= notice %></p>
+
+<h1>Lista Articoli</h1>
+
+
+<div class="col-md-8">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Autore</th>
+        <th>Titolo</th>
+        <th>Testo</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @articles.each do |article| %>
+        <tr>
+          <td><%= article.user.username %></td>
+          <td><%= article.title %></td>
+          <td><%= article.body %></td>
+          <td><%= link_to 'Visualizza', article %></td>
+          <td><%= link_to 'Modifica', edit_article_path(article) %></td>
+          <td><%= link_to 'Elimina', article, method: :delete, data: { confirm: 'Sei sicuro?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Nuovo Articolo', new_article_path %>
+</div>
+<div class="col-md-4">
+  <div class="well">
+    <h4>Articoli Recenti</h4>
+    <% @articles.each do |p| %>
+      Creato da: <% p.user.username %><br />
+      <strong><%= link_to p.title, p%></strong>
+      <p><%= truncate(p.body) %></p>
+    <% end %>
+  </div>
+</div>
+
+
+<br>
+
+```
+
+```html
+<!-- <p id="notice"><%= notice %></p> -->
+
+<h1>Lista Articoli</h1>
+
+<div class="row">
+  <div class="col-lg-8">
+    <% @articles.each do |article| %>
+      <h4 style="font-size: 45.5px;"><%= link_to article.title, article %></h4>
+      <p><span class="glyphicon glyphicon-time"></span></p>
+      <p>Articolo di:<strong><%= article.user.username %></strong></p>
+      <hr>
+    <% end %>
+  
+    <%= link_to 'Nuovo Articolo', new_article_path, class: "btn btn-default btn-xs" %>
+  </div>
+  <div class="col-md-4">
+    <div class="well">
+      <h4>Articoli Recenti</h4>
+      <% @articles.each do |p| %>
+        Creato da: <% p.user.username %><br />
+        <strong><%= link_to p.title, p%></strong>
+        <p><%= truncate(p.body) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<br>
+```
+
+Ho anche modificato il NAV. Qui avevo messo il <%= nel each e mi visualizzan i dati
+di tutta la query :D
+
+
+# Lezione 86
+
+Prendiamo gli ultimi 5 per i Recent. Vado ad aggiungere una variabile nel controller
+degli articoli
+
+```ruby
+def index
+  @articles = Article.all
+  @lastArticles = Article.last(5)
+end
+```
+
+e nell'indice degli articoli avrò:
+
+```
+<div class="col-md-4">
+  <div class="well">
+    <h4>Articoli Recenti</h4>
+    <% @lastArticles.each do |p| %>
+      Creato da: <% p.user.username %><br />
+      <strong><%= link_to p.title, p%></strong>
+      <p><%= truncate(p.body) %></p>
+    <% end %>
+  </div>
+</div>
+```
+
+# Lezione 87
+
+Ora vediamo la paginazione :)
+Ho creato alcuni articoli di esempio.
+
+Cerco su google "rails will paginate" e dovrei trovare la pagina di will_paginate
+su RubyGems e inserisco nel GEMFILE:
+
+```
+gem 'will_paginate', '~> 3.1'
+```
+
+successivamente, sempre da RubyGems.org, vado a cercare will paginate bootstrap
+ed inserisco anche questo nel GEMFILE:
+
+```
+gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
+```
+
+e facci o da terminale: bundle
+
+Ora nel controller degli articoli cambio questa def:
+
+```
+def index
+  @articles = Article.all.paginate(page: params[:page], per_page: 2)
+  @lastArticles = Article.last(5)
+end
+```
+
+nell'index view degli articoli aggiungo, dopo l'ultima chiusura div e prima del br:
+
+```html
+<%= will_paginate @articles %>
+```
+
+Se faccio il refresh della pagina ho un errore. Questo per due motivi:
+
+1. Quando installo le GEM devo restartare il server
+2. Il codice nel controller è sbagliato, devo togliere all:
+
+```
+def index
+  @articles = Article.paginate(page: params[:page], per_page: 2)
+  @lastArticles = Article.last(5)
+end
+```
+
+# Lezione88
+
+Ho modificato lo show di articles così:
+
+```
+<div class="row">
+
+  <!-- Blog Post Content Column -->
+   <div class="col-lg-8">
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1 style="font-size: 62.5px;">
+      <%= @article.title %>
+    </h1>
+    <!-- Author -->
+    <p class="lead">
+      Autore: <%= @article.user.username %>
+    </p>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span> Creato:
+      <%= @article.created_at.strftime("%d-%m-%Y %H:%M") %>
+    </p>
+    <!-- Preview Image -->
+
+
+    <!-- Post Content -->
+    <%= @article.body %>
+    <hr>
+    <!-- Blog Comments -->
+    
+    <%= render @article.comments %>
+
+    <!-- Comments Form -->
+
+    <%= render 'comments/form' %>
+    <div class="well">
+
+      <h4>blah blah</h4>
+    </div>
+    <hr>
+    <!-- Posted Comments -->
+    <!-- Comment -->
+  </div>
+  <!-- Blog Sidebar Widgets Column -->
+  <div class="col-md-4">
+    <!-- Blog Search Well -->
+
+    <!-- Blog Categories Well -->
+
+    <!-- Side Widget Well -->
+    <div class="well">
+      <h4></h4>
+    </div>
+  </div>
+  
+  
+</div>
+
+<%= link_to 'Modifica', edit_article_path(@article) %> |
+<%= link_to 'Elimina', @article, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
+<%= link_to 'Torna indietro', articles_path %>
+```
+
+Mentre ho modificato l'index di pages cosi':
+
+```
+<div class="row">
+  <!-- Blog Post Content Column -->
+  <div class="col-lg-8">
+    <!-- Blog Post -->
+    <!-- Title -->
+    <div class="jumbtron">
+      <h1>Benvenuto su Lorenzo's Article</h1>
+      <p>Applicazione costruita con Rails</p>
+    </div>
+  </div>
+  <!-- Blog Sidebar Widgets Column -->
+  <div class="col-md-4">
+    <div class="well">
+      <h4>Articoli Recenti</h4>
+      <% @lastArticles.each do |a|  %>
+      Creato da: <%= a.user.username %> <br />
+      <strong><%= link_to a.title, a %></strong>
+      <p><%= truncate(a.body) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /.row -->
+<hr>
+```
+
+e ho inserito nel controller di pages, aggiungendo il lastArticles:
+
+```
+def index
+  @articles = Article.last(2)
+  @lastArticles = Article.last(5)
+end
+```
+
+Facciamo il fix del footer e l'aggiunta di una regola CSS.
+
+Vogliamo che dopo il signin c'è il redirect sulla lista articoli

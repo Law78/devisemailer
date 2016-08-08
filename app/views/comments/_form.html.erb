@@ -1,4 +1,4 @@
 <%= simple_form_for ([@article, @article.comments.build]) do |f| %>
-  <%= f.input :body%>
+  <%= f.input :body, :label => "Commento"%>
   <%= f.submit "Invia commento" %>
 <% end %>

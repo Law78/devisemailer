@@ -1,6 +1,20 @@
 <div class="media">
-  <div class="pull-left"></div>
+  <div class="pull-left">
+    
+    <%= comment.user.username %>
+    
+  </div>
   <div class="media-body">
-    <p class="media-heading pull-right"></p>
+    <p class="media-heading pull-right">
+      
+      <%= time_ago_in_words(comment.created_at) %>
+      
+    </p><br />
+    
+    <%= comment.body %>
   </div>
 </div>
+
+<%= link_to 'Modifica', edit_article_comment_path(comment.article,comment) %> |
+<%= link_to 'Cancella', [comment.article, comment], method: :delete,
+  data: {confirm: "Sei sicuro?" } %>

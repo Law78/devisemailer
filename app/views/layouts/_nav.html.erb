@@ -16,15 +16,15 @@
       <ul class="nav navbar-nav navbar-right">
         
         <li><%= link_to "Contattami",       pages_contact_path %></li>
-        <li><%= link_to "About Me",            pages_about_path %></li>
-        <li><%= link_to "Inserisci un Articolo", new_article_path %></li>
+        <li><%= link_to "About Me",         pages_about_path %></li>
+        <li><%= link_to "Articoli",         articles_path %></li>
         <li><%= link_to "Sign Up",          new_user_registration_path if !current_user %></li>
         <li><%= link_to "Sign In",          new_user_session_path if !current_user %></li>
         <% if current_user %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username %> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Articoli", articles_path %>></li>
+            <li><%= link_to "Inserisci Articolo", new_article_path %>></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li><%= link_to "Edit My Profile", edit_user_registration_path %></li>

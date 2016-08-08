@@ -1,0 +1,9 @@
+<h1>Modifica commento</h1>
+
+<%= simple_form_for([@article, @comment]) do |f| %>
+  <%= f.input :body, :label => "Commento" %>
+  <%= f.submit "Modifica" %>
+<% end %>
+
+<%= link_to 'Torna Articolo', @article %> |
+<%= link_to 'Lista Articoli', articles_path %>

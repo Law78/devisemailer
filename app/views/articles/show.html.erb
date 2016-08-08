@@ -23,17 +23,17 @@
     <%= @article.body %>
     <hr>
     <!-- Blog Comments -->
-
-    <!-- Comments Form -->
-
-    <%= render 'comments/form' %>
+    <%= link_to 'Modifica', edit_article_path(@article) %> |
+    <%= link_to 'Elimina', @article, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
+    <%= link_to 'Torna indietro', articles_path %>
+    <hr>
+    <h4>Commenti</h4>
     <div class="well">
-
-      <h4>blah blah</h4>
+      
+      <%= render @article.comments %>
     </div>
     <hr>
-    <!-- Posted Comments -->
-    <!-- Comment -->
+    
   </div>
   <!-- Blog Sidebar Widgets Column -->
   <div class="col-md-4">
@@ -43,15 +43,25 @@
 
     <!-- Side Widget Well -->
     <div class="well">
-      <h4>Recent Posts</h4>
+        <% @comments.each do |p| %>
+          <strong>Commento: </strong><%= p.body %><br />
+          <br />
+        <% end %>
+        
+       <%= will_paginate @comments %>
     </div>
   </div>
-  
+  <!-- Comments Form -->
+
+    
   
 </div>
 
-<%= link_to 'Modifica', edit_article_path(@article) %> |
-<%= link_to 'Torna indietro', articles_path %>
 
 
+<div class="row">
+  <div class="col-md-12">
+    <%= render 'comments/form' %>
+  </div>
+</div>
   
